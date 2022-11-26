@@ -2,7 +2,9 @@ package com.plcoding.androidstorage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 
 private const val TAG = "MainActivity2"
@@ -20,6 +22,25 @@ class MainActivity2 : AppCompatActivity() {
                 Log.d("PhotoPicker", "No media selected")
             }
 
+        }
+//        val mimeType = "image/gif"
+//        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.SingleMimeType(mimeType)))
+
+
+
+
+        applicationContext.contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )?.use { cursor ->
+            while (cursor.moveToNext()) {
+                Log.d(TAG, "onCreate2: "+cursor.toString())
+                // Use an ID column from the projection to get
+                // a URI representing the media item itself.
+            }
         }
     }
 }

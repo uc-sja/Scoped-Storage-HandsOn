@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        startActivity(Intent(this, MainActivity2::class.java))
 //        val intent = Intent(StorageManager.ACTION_CLEAR_APP_CACHE)
 //        startActivityForResult(intent, 123)
 
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         val file = File(baseContext.getExternalFilesDir(
             Environment.DIRECTORY_PICTURES), "albumName")
-        if (!file?.mkdirs()) {
+        if (!file.mkdirs()) {
             Log.d(TAG, "onCreate: not created")
         } else{
             Log.d(TAG, "onCreate: "+file.path + "  "+file.absolutePath)
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
         val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) {
             val isPrivate = binding.switchPrivate.isChecked
             if(isPrivate) {
-                val isSavedSuccessfully = savePhotoToInternalStorage(UUID.randomUUID().toString(), it)
+                val isSavedSuccessfully = savePhotoToInternalStorage(UUID.randomUUID().toString(), it!!)
                 if(isSavedSuccessfully) {
                     loadPhotosFromInternalStorageIntoRecyclerView()
                     Toast.makeText(this, "Photo saved successfully", Toast.LENGTH_SHORT).show()
