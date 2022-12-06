@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.plcoding.androidstorage.databinding.ActivityMainBinding
+import com.plcoding.androidstorage.utils.NetworkUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startActivity(Intent(this, MainActivity2::class.java))
+        Log.d(TAG, "onCreate: ip "+NetworkUtils.getIPAddress(true))
+
+//        startActivity(Intent(this, MainActivity2::class.java))
 //        val intent = Intent(StorageManager.ACTION_CLEAR_APP_CACHE)
 //        startActivityForResult(intent, 123)
 
@@ -92,11 +95,8 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(TAG, "onCreate:  internal "+(availableBytes!!/1024)/1024/1024)
             Log.d(TAG, "onCreate:  external "+(availableBytes2!!/1024)/1024/1024)
-
-
-
-
         }
+
         internalStoragePhotoAdapter = InternalStoragePhotoAdapter {
             val isDeletionSuccessful = deletePhotoFromInternalStorage(it.name)
             if(isDeletionSuccessful) {
